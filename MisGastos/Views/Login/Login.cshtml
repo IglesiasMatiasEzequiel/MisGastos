@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MisGastos</title>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Ingresar</h5>
+                        @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { id = "LoginForm", @class = "form-signin" }))
+                        {
+                            <div class="form-label-group">
+                                <input type="text" id="username" password="username" class="form-control" placeholder="Nombre de usuario" required autofocus>
+                                <label for="username">Nombre de usuario</label>
+                            </div>
+
+                            <div class="form-label-group">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                                <label for="password">Contraseña</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Recordar contraseña</label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Entrar!</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@Styles.Render("~/Content/Login.css")
+@Styles.Render("~/Content/bootstrap.min.css")
+@Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+@Scripts.Render("~/Scripts/bootstrap.js")
