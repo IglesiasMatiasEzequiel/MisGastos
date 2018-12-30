@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using MisGastos.Entities;
+using System;
+using System.Web.Mvc;
+
 
 namespace MisGastos.Controllers
 {
@@ -11,9 +14,31 @@ namespace MisGastos.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        public ActionResult Login(LoginModel model)
         {
-            return RedirectToAction("Index", "Home");
+            if (model == null)
+            {
+                throw new Exception("El modelo es nulo.");
+            }
+
+            if (string.IsNullOrEmpty(model.Username))
+            {
+                ModelState.AddModelError("Error", "El nombre de usuario no puede ser vacío.");
+            }
+
+            if (string.IsNullOrEmpty(model.Password))
+            {
+                ModelState.AddModelError("Error", "La contraseña no puede ser vacía.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View("Login", model);
+            }
         }
     }
 }

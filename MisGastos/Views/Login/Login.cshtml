@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MisGastos.Entities.LoginModel
+
+@{
     Layout = null;
 }
 
@@ -21,12 +23,12 @@
                         @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { id = "LoginForm", @class = "form-signin" }))
                         {
                             <div class="form-label-group">
-                                <input type="text" id="username" password="username" class="form-control" placeholder="Nombre de usuario" required autofocus>
+                                @Html.TextBoxFor(model => model.Username, new { id = "username", @class = "form-control", type = "text", placeholder = "Nombre de usuario" })
                                 <label for="username">Nombre de usuario</label>
                             </div>
-                         
+
                             <div class="form-label-group">
-                                <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                                @Html.TextBoxFor(model => model.Password, new { id = "password", @class = "form-control", type = "password", placeholder = "Contraseña" })
                                 <label for="password">Contraseña</label>
                             </div>
 
@@ -36,6 +38,11 @@
                             </div>
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Entrar!</button>
                         }
+
+                        <!-- Validation Summary-->
+                        <div class="validationSummary alert alert-danger mgBottom0 mgTop1" style="display: none" role="alert"></div>
+                        <!-- Validation Summary-->
+
                     </div>
                 </div>
             </div>
@@ -44,7 +51,54 @@
 </body>
 </html>
 
+@Styles.Render("~/Content/General.css")
 @Styles.Render("~/Content/Login.css")
+@Styles.Render("~/Content/ValidationSummary.css")
 @Styles.Render("~/Content/bootstrap.min.css")
 @Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
 @Scripts.Render("~/Scripts/bootstrap.js")
+@Scripts.Render("~/Scripts/app/general.js")
+@Scripts.Render("~/Scripts/app/validationSummary.js")
+
+<script type="text/javascript">
+
+    var _validationSummary = new ValidationSummary();
+
+    $(document).ready(function () {
+
+        bindForm({
+            selector: "#LoginForm",
+            validateForm: validateForm
+        });
+
+    });
+
+    function validateForm() {
+
+        var anyError = false;
+        var errorList = [];
+
+        if (!$("#username").val()) {
+            errorList.push("El usuario es obligatorio.");
+            anyError = true;
+        }
+
+        if (!$("#password").val()) {
+            errorList.push("La contraseña es obligatoria.");
+            anyError = true;
+        }
+
+        _validationSummary.initialize();
+
+        if (anyError) {
+            _validationSummary.show({
+                list: errorList
+            });
+        } else {
+            return true;
+        }
+
+
+    }
+
+</script>

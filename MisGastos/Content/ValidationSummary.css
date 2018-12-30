@@ -1,0 +1,13 @@
+﻿.validationSummaryTitle {
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.validationSummaryContent > ul{
+    margin: 0;
+}
+
+.validationSummaryContent > ul li {
+    font-size: 12px;
+}
