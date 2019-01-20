@@ -1,0 +1,25 @@
+﻿@using MisGastosRepository
+@model List<Ingreso>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Concepto</th>
+            <th scope="col">Moneda</th>
+            <th scope="col">Importe</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (Ingreso ingreso in Model)
+        {
+            <tr>
+                <th scope="row">@ingreso.ConceptosIngreso.Descripcion</th>
+                <td>@ingreso.Moneda.Descripcion</td>
+                <td>@($"{ingreso.Moneda.Simbolo} {ingreso.Importe:C2}")</td>
+                <td>@ingreso.FechaIngreso.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

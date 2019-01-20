@@ -1,0 +1,14 @@
+﻿@model MisGastos.Entities.App.UsuarioSession
+
+<header class="header">
+    <div class="header_content d-flex flex-row align-items-center justify-content-start">
+        <div class="logo">Mis<span>.</span>Gastos</div>
+        <div class="main_nav d-flex flex-row align-items-end justify-content-start">
+            <ul class="d-flex flex-row align-items-center justify-content-start">
+                <li class="active"><a href="about.html">Estadísticas</a></li>
+                <li>@Html.ActionLink("Ingresos", "Ingresos", "Ingresos", null, null)</li>
+                <li><a href="#">Egresos</a></li>
+            </ul>
+        </div>
+    </div>
+</header>

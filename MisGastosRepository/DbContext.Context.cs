@@ -25,12 +25,12 @@ namespace MisGastosRepository
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ConceptosEgreso> ConceptosEgresoes { get; set; }
         public virtual DbSet<ConceptosIngreso> ConceptosIngresoes { get; set; }
+        public virtual DbSet<Egreso> Egresos { get; set; }
+        public virtual DbSet<Ingreso> Ingresos { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<Moneda> Monedas { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
-        public virtual DbSet<ConceptosEgreso> ConceptosEgresoes { get; set; }
-        public virtual DbSet<Egreso> Egresos { get; set; }
-        public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<Ingreso> Ingresos { get; set; }
     }
 }

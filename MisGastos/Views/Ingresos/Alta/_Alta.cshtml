@@ -1,0 +1,42 @@
+﻿@model MisGastosRepository.Ingreso
+
+
+
+    @using (Ajax.BeginForm("AltaIngreso", "Ingresos", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "response"
+    }))
+    {
+    <div class="col-md-8">
+        <div class="row form-inline">
+            @Html.LabelFor(m => m.IdConceptoIngreso, new { @class = "label col-md-2" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.IdConceptoIngreso, (SelectList)ViewBag.ComboConceptosIngreso, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row form-inline">
+            @Html.LabelFor(m => m.IdMoneda, new { @class = "label col-md-2" })
+            <div class="col-md-8">
+                @Html.DropDownListFor(m => m.IdMoneda, (SelectList)ViewBag.ComboMonedas, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row form-inline">
+            @Html.LabelFor(m => m.Importe, new { @class = "label col-md-2" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Importe, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row form-inline">
+            @Html.LabelFor(m => m.FechaIngreso, new { @class = "label col-md-2" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.FechaIngreso, new { @class = "form-control datepicker" })
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+    </div>
+    }
+
+<div id="response"></div>
+

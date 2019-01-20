@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MisGastos.Entities.App;
 
 namespace MisGastos.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : CommonController
     {
         public ActionResult Index()
         {

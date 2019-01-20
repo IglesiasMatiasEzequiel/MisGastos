@@ -1,0 +1,29 @@
+﻿@using MisGastos.Entities.Helpers
+@model MisGastosRepository.Usuario
+
+<div class="general_info d-flex flex-xl-column flex-md-row flex-column">
+    <div>
+        <div class="general_info_image">
+            <div class="background_image" style="background-image:url('@Url.Content("~/Images/Layout/accountancy1.jpg")')"></div>
+        </div>
+    </div>
+    <div class="general_info_content">
+        <div class="general_info_content_inner mCustomScrollbar" data-mcs-theme="minimal-dark">
+            <div class="general_info_title">Información personal</div>
+            <ul class="general_info_list">
+                <li class="d-flex flex-row align-items-center justify-content-start">
+                    <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img class="icon" src="@Url.Content("~/Images/Icons/pencil.png")" alt=""></div>
+                    <div class="general_info_text">Nombre: <span>@Html.ConGuion(Model.NombreCompleto)</span></div>
+                </li>
+                <li class="d-flex flex-row align-items-center justify-content-start">
+                    <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img class="icon" src="@Url.Content("~/Images/Icons/star.png")" alt=""></div>
+                    <div class="general_info_text">Fecha de cumpleaños: <span>@Html.ConGuion(Model.FechaCumpleaños)</span></div>
+                </li>
+                <li class="d-flex flex-row align-items-center justify-content-start">
+                    <div class="general_info_icon d-flex flex-column align-items-start justify-content-center"><img class="icon" src="@Url.Content("~/Images/Icons/message.png")" alt=""></div>
+                    <div class="general_info_text">Email: @Html.ConGuion(Model.Email)</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

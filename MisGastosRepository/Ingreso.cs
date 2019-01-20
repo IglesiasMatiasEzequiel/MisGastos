@@ -21,6 +21,7 @@ namespace MisGastosRepository
         public decimal Importe { get; set; }
         public System.DateTime FechaIngreso { get; set; }
     
+        public virtual ConceptosIngreso ConceptosIngreso { get; set; }
         public virtual Moneda Moneda { get; set; }
         public virtual Usuario Usuario { get; set; }
     }

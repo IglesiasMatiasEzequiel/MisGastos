@@ -1,0 +1,25 @@
+﻿@using MisGastosRepository
+@model MisGastos.Entities.M_Ingresos
+
+<div class="main_title_container mgBottom3 d-flex flex-column align-items-start justify-content-end">
+    <div class="main_subtitle">Alta, baja y edición de ingresos</div>
+    <div class="main_title">Ingresos</div>
+</div>
+
+<div>
+    <ul id="nav-tab" class="nav nav-tabs" role="tablist">
+        <li><a id="navListadoIngresostab" href="#navListadoIngresos" class="nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="navListadoIngresos" aria-selected="true">Listado</a></li>
+        <li><a id="navAltaIngresotab" href="#navAltaIngreso" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="navAltaIngreso" aria-selected="false">Alta</a></li>
+    </ul>
+</div>
+
+<div id="nav-tabContent" class="tab-content">
+    <div id="navListadoIngresos" class="tab-pane fade show active" role="tabpanel" aria-labelledby="navListadoIngresostab">
+        @{ Html.RenderPartial("Listado/_Listado", Model.Ingresos);}
+    </div>
+
+    <div id="navAltaIngreso" class="tab-pane fade" role="tabpanel" aria-labelledby="navAltaIngresotab">
+        @{ Html.RenderPartial("Alta/_Alta", new Ingreso());}
+    </div>
+</div>
+

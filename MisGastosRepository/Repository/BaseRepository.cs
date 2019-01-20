@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace MisGastosRepository.Repository
 {
@@ -12,6 +14,11 @@ namespace MisGastosRepository.Repository
         }
 
         protected abstract DbSet<T> GetDbSet();
+
+        public List<T> Listar()
+        {
+            return GetDbSet().ToList();
+        }
 
         public void Guardar(T model)
         {

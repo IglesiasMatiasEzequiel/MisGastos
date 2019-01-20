@@ -21,7 +21,7 @@ namespace MisGastosRepository
         }
     
         public int IdConceptoEgreso { get; set; }
-        public string ConceptoEgreso { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Egreso> Egresos { get; set; }

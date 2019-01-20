@@ -10,14 +10,14 @@
             <PropertyRef Name="IdConceptoEgreso" />
           </Key>
           <Property Name="IdConceptoEgreso" Type="int" Nullable="false" />
-          <Property Name="ConceptoEgreso" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ConceptosIngreso">
           <Key>
             <PropertyRef Name="IdConceptoIngreso" />
           </Key>
           <Property Name="IdConceptoIngreso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ConceptoIngreso" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Egresos">
           <Key>
@@ -55,7 +55,7 @@
             <PropertyRef Name="IdMoneda" />
           </Key>
           <Property Name="IdMoneda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Moneda" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Simbolo" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios">
@@ -63,10 +63,12 @@
             <PropertyRef Name="IdUsuario" />
           </Key>
           <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+          <Property Name="FechaCumpleaños" Type="date" />
         </EntityType>
         <Association Name="FK_Egresos_ConceptosEgreso">
           <End Role="ConceptosEgreso" Type="Self.ConceptosEgreso" Multiplicity="1" />
@@ -101,6 +103,18 @@
             </Principal>
             <Dependent Role="Egresos">
               <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingresos_ConceptosIngreso">
+          <End Role="ConceptosIngreso" Type="Self.ConceptosIngreso" Multiplicity="1" />
+          <End Role="Ingresos" Type="Self.Ingresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConceptosIngreso">
+              <PropertyRef Name="IdConceptoIngreso" />
+            </Principal>
+            <Dependent Role="Ingresos">
+              <PropertyRef Name="IdConceptoIngreso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -160,6 +174,10 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Egresos" EntitySet="Egresos" />
           </AssociationSet>
+          <AssociationSet Name="FK_Ingresos_ConceptosIngreso" Association="Self.FK_Ingresos_ConceptosIngreso">
+            <End Role="ConceptosIngreso" EntitySet="ConceptosIngreso" />
+            <End Role="Ingresos" EntitySet="Ingresos" />
+          </AssociationSet>
           <AssociationSet Name="FK_Ingresos_Monedas" Association="Self.FK_Ingresos_Monedas">
             <End Role="Monedas" EntitySet="Monedas" />
             <End Role="Ingresos" EntitySet="Ingresos" />
@@ -178,15 +196,20 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MisGastosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MisGastosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ConceptosEgresoes" EntityType="MisGastosModel.ConceptosEgreso" />
           <EntitySet Name="ConceptosIngresoes" EntityType="MisGastosModel.ConceptosIngreso" />
+          <EntitySet Name="Egresos" EntityType="MisGastosModel.Egreso" />
+          <EntitySet Name="Ingresos" EntityType="MisGastosModel.Ingreso" />
+          <EntitySet Name="Logs" EntityType="MisGastosModel.Log" />
           <EntitySet Name="Monedas" EntityType="MisGastosModel.Moneda" />
           <EntitySet Name="Usuarios" EntityType="MisGastosModel.Usuario" />
-          <EntitySet Name="ConceptosEgresoes" EntityType="MisGastosModel.ConceptosEgreso" />
-          <EntitySet Name="Egresos" EntityType="MisGastosModel.Egreso" />
-          <EntitySet Name="Logs" EntityType="MisGastosModel.Log" />
           <AssociationSet Name="FK_Egresos_ConceptosEgreso" Association="MisGastosModel.FK_Egresos_ConceptosEgreso">
             <End Role="ConceptosEgreso" EntitySet="ConceptosEgresoes" />
             <End Role="Egreso" EntitySet="Egresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ingresos_ConceptosIngreso" Association="MisGastosModel.FK_Ingresos_ConceptosIngreso">
+            <End Role="ConceptosIngreso" EntitySet="ConceptosIngresoes" />
+            <End Role="Ingreso" EntitySet="Ingresos" />
           </AssociationSet>
           <AssociationSet Name="FK_Egresos_Monedas" Association="MisGastosModel.FK_Egresos_Monedas">
             <End Role="Moneda" EntitySet="Monedas" />
@@ -196,11 +219,6 @@
             <End Role="Usuario" EntitySet="Usuarios" />
             <End Role="Egreso" EntitySet="Egresos" />
           </AssociationSet>
-          <AssociationSet Name="FK_Log_Usuario" Association="MisGastosModel.FK_Log_Usuario">
-            <End Role="Usuario" EntitySet="Usuarios" />
-            <End Role="Log" EntitySet="Logs" />
-          </AssociationSet>
-          <EntitySet Name="Ingresos" EntityType="MisGastosModel.Ingreso" />
           <AssociationSet Name="FK_Ingresos_Monedas" Association="MisGastosModel.FK_Ingresos_Monedas">
             <End Role="Moneda" EntitySet="Monedas" />
             <End Role="Ingreso" EntitySet="Ingresos" />
@@ -209,44 +227,26 @@
             <End Role="Usuario" EntitySet="Usuarios" />
             <End Role="Ingreso" EntitySet="Ingresos" />
           </AssociationSet>
+          <AssociationSet Name="FK_Log_Usuario" Association="MisGastosModel.FK_Log_Usuario">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="ConceptosIngreso">
-          <Key>
-            <PropertyRef Name="IdConceptoIngreso" />
-          </Key>
-          <Property Name="IdConceptoIngreso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ConceptoIngreso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Moneda">
-          <Key>
-            <PropertyRef Name="IdMoneda" />
-          </Key>
-          <Property Name="IdMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Moneda1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Simbolo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Egresos" Relationship="MisGastosModel.FK_Egresos_Monedas" FromRole="Moneda" ToRole="Egreso" />
-          <NavigationProperty Name="Ingresos" Relationship="MisGastosModel.FK_Ingresos_Monedas" FromRole="Moneda" ToRole="Ingreso" />
-        </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="IdUsuario" />
-          </Key>
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Egresos" Relationship="MisGastosModel.FK_Egresos_Usuarios" FromRole="Usuario" ToRole="Egreso" />
-          <NavigationProperty Name="Logs" Relationship="MisGastosModel.FK_Log_Usuario" FromRole="Usuario" ToRole="Log" />
-          <NavigationProperty Name="Ingresos" Relationship="MisGastosModel.FK_Ingresos_Usuarios" FromRole="Usuario" ToRole="Ingreso" />
-        </EntityType>
         <EntityType Name="ConceptosEgreso">
           <Key>
             <PropertyRef Name="IdConceptoEgreso" />
           </Key>
           <Property Name="IdConceptoEgreso" Type="Int32" Nullable="false" />
-          <Property Name="ConceptoEgreso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Egresos" Relationship="MisGastosModel.FK_Egresos_ConceptosEgreso" FromRole="ConceptosEgreso" ToRole="Egreso" />
+        </EntityType>
+        <EntityType Name="ConceptosIngreso">
+          <Key>
+            <PropertyRef Name="IdConceptoIngreso" />
+          </Key>
+          <Property Name="IdConceptoIngreso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingresos" Relationship="MisGastosModel.FK_Ingresos_ConceptosIngreso" FromRole="ConceptosIngreso" ToRole="Ingreso" />
         </EntityType>
         <EntityType Name="Egreso">
           <Key>
@@ -262,6 +262,20 @@
           <NavigationProperty Name="Moneda" Relationship="MisGastosModel.FK_Egresos_Monedas" FromRole="Egreso" ToRole="Moneda" />
           <NavigationProperty Name="Usuario" Relationship="MisGastosModel.FK_Egresos_Usuarios" FromRole="Egreso" ToRole="Usuario" />
         </EntityType>
+        <EntityType Name="Ingreso">
+          <Key>
+            <PropertyRef Name="IdIngreso" />
+          </Key>
+          <Property Name="IdIngreso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdConceptoIngreso" Type="Int32" Nullable="false" />
+          <Property Name="IdMoneda" Type="Int32" Nullable="false" />
+          <Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="ConceptosIngreso" Relationship="MisGastosModel.FK_Ingresos_ConceptosIngreso" FromRole="Ingreso" ToRole="ConceptosIngreso" />
+          <NavigationProperty Name="Moneda" Relationship="MisGastosModel.FK_Ingresos_Monedas" FromRole="Ingreso" ToRole="Moneda" />
+          <NavigationProperty Name="Usuario" Relationship="MisGastosModel.FK_Ingresos_Usuarios" FromRole="Ingreso" ToRole="Usuario" />
+        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="IdLog" />
@@ -272,6 +286,31 @@
           <Property Name="FechaAlta" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Usuario" Relationship="MisGastosModel.FK_Log_Usuario" FromRole="Log" ToRole="Usuario" />
         </EntityType>
+        <EntityType Name="Moneda">
+          <Key>
+            <PropertyRef Name="IdMoneda" />
+          </Key>
+          <Property Name="IdMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Simbolo" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Egresos" Relationship="MisGastosModel.FK_Egresos_Monedas" FromRole="Moneda" ToRole="Egreso" />
+          <NavigationProperty Name="Ingresos" Relationship="MisGastosModel.FK_Ingresos_Monedas" FromRole="Moneda" ToRole="Ingreso" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCumpleaños" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Egresos" Relationship="MisGastosModel.FK_Egresos_Usuarios" FromRole="Usuario" ToRole="Egreso" />
+          <NavigationProperty Name="Ingresos" Relationship="MisGastosModel.FK_Ingresos_Usuarios" FromRole="Usuario" ToRole="Ingreso" />
+          <NavigationProperty Name="Logs" Relationship="MisGastosModel.FK_Log_Usuario" FromRole="Usuario" ToRole="Log" />
+        </EntityType>
         <Association Name="FK_Egresos_ConceptosEgreso">
           <End Type="MisGastosModel.ConceptosEgreso" Role="ConceptosEgreso" Multiplicity="1" />
           <End Type="MisGastosModel.Egreso" Role="Egreso" Multiplicity="*" />
@@ -281,6 +320,18 @@
             </Principal>
             <Dependent Role="Egreso">
               <PropertyRef Name="IdConceptoEgreso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ingresos_ConceptosIngreso">
+          <End Type="MisGastosModel.ConceptosIngreso" Role="ConceptosIngreso" Multiplicity="1" />
+          <End Type="MisGastosModel.Ingreso" Role="Ingreso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ConceptosIngreso">
+              <PropertyRef Name="IdConceptoIngreso" />
+            </Principal>
+            <Dependent Role="Ingreso">
+              <PropertyRef Name="IdConceptoIngreso" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -308,31 +359,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Log_Usuario">
-          <End Type="MisGastosModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="MisGastosModel.Log" Role="Log" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="IdUsuario" />
-            </Principal>
-            <Dependent Role="Log">
-              <PropertyRef Name="IdUsuario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Ingreso">
-          <Key>
-            <PropertyRef Name="IdIngreso" />
-          </Key>
-          <Property Name="IdIngreso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="IdConceptoIngreso" Type="Int32" Nullable="false" />
-          <Property Name="IdMoneda" Type="Int32" Nullable="false" />
-          <Property Name="Importe" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
-          <Property Name="FechaIngreso" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Moneda" Relationship="MisGastosModel.FK_Ingresos_Monedas" FromRole="Ingreso" ToRole="Moneda" />
-          <NavigationProperty Name="Usuario" Relationship="MisGastosModel.FK_Ingresos_Usuarios" FromRole="Ingreso" ToRole="Usuario" />
-        </EntityType>
         <Association Name="FK_Ingresos_Monedas">
           <End Type="MisGastosModel.Moneda" Role="Moneda" Multiplicity="1" />
           <End Type="MisGastosModel.Ingreso" Role="Ingreso" Multiplicity="*" />
@@ -357,45 +383,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_Log_Usuario">
+          <End Type="MisGastosModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="MisGastosModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MisGastosModelStoreContainer" CdmEntityContainer="MisGastosEntities">
-          <EntitySetMapping Name="ConceptosIngresoes">
-            <EntityTypeMapping TypeName="MisGastosModel.ConceptosIngreso">
-              <MappingFragment StoreEntitySet="ConceptosIngreso">
-                <ScalarProperty Name="ConceptoIngreso" ColumnName="ConceptoIngreso" />
-                <ScalarProperty Name="IdConceptoIngreso" ColumnName="IdConceptoIngreso" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Monedas">
-            <EntityTypeMapping TypeName="MisGastosModel.Moneda">
-              <MappingFragment StoreEntitySet="Monedas">
-                <ScalarProperty Name="Simbolo" ColumnName="Simbolo" />
-                <ScalarProperty Name="Moneda1" ColumnName="Moneda" />
-                <ScalarProperty Name="IdMoneda" ColumnName="IdMoneda" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="MisGastosModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuarios">
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Usuario" />
-                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ConceptosEgresoes">
             <EntityTypeMapping TypeName="MisGastosModel.ConceptosEgreso">
               <MappingFragment StoreEntitySet="ConceptosEgreso">
-                <ScalarProperty Name="ConceptoEgreso" ColumnName="ConceptoEgreso" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdConceptoEgreso" ColumnName="IdConceptoEgreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConceptosIngresoes">
+            <EntityTypeMapping TypeName="MisGastosModel.ConceptosIngreso">
+              <MappingFragment StoreEntitySet="ConceptosIngreso">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdConceptoIngreso" ColumnName="IdConceptoIngreso" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -411,6 +429,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Ingresos">
+            <EntityTypeMapping TypeName="MisGastosModel.Ingreso">
+              <MappingFragment StoreEntitySet="Ingresos">
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="IdMoneda" ColumnName="IdMoneda" />
+                <ScalarProperty Name="IdConceptoIngreso" ColumnName="IdConceptoIngreso" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdIngreso" ColumnName="IdIngreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Logs">
             <EntityTypeMapping TypeName="MisGastosModel.Log">
               <MappingFragment StoreEntitySet="Log">
@@ -421,15 +451,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ingresos">
-            <EntityTypeMapping TypeName="MisGastosModel.Ingreso">
-              <MappingFragment StoreEntitySet="Ingresos">
-                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
-                <ScalarProperty Name="Importe" ColumnName="Importe" />
+          <EntitySetMapping Name="Monedas">
+            <EntityTypeMapping TypeName="MisGastosModel.Moneda">
+              <MappingFragment StoreEntitySet="Monedas">
+                <ScalarProperty Name="Simbolo" ColumnName="Simbolo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdMoneda" ColumnName="IdMoneda" />
-                <ScalarProperty Name="IdConceptoIngreso" ColumnName="IdConceptoIngreso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="MisGastosModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="FechaCumpleaños" ColumnName="FechaCumpleaños" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
-                <ScalarProperty Name="IdIngreso" ColumnName="IdIngreso" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

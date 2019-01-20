@@ -14,7 +14,16 @@ namespace MisGastosRepository
     
     public partial class ConceptosIngreso
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ConceptosIngreso()
+        {
+            this.Ingresos = new HashSet<Ingreso>();
+        }
+    
         public int IdConceptoIngreso { get; set; }
-        public string ConceptoIngreso { get; set; }
+        public string Descripcion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ingreso> Ingresos { get; set; }
     }
 }

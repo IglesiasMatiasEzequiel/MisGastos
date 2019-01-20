@@ -1,43 +1,75 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using MisGastos.Controllers
+@using MisGastos.Entities.App
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>About</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="vCard template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button> 
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+    <div class="super_container">
+
+        @{ UsuarioSession usuarioSession = (ViewContext.Controller as CommonController).UsuarioSession; }
+        @{ Html.RenderPartial("_Header", usuarioSession); }
+
+        <div class="content_container">
+            <div class="main_content_outer d-flex flex-xl-row flex-column align-items-start justify-content-start">
+
+                @{ Html.RenderPartial("_InfoPersonal", usuarioSession.Usuario); }
+
+                <!-- Main Content -->
+
+                <div class="main_content">
+                    @RenderBody()
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                </ul>
-            </div>
+
+
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Styles.Render("~/Content/General.css")
+    @Styles.Render("~/Content/Responsive.css")
+    @Styles.Render("~/Content/Login.css")
+    @Styles.Render("~/Content/ValidationSummary.css")
+    @Styles.Render("~/Content/bootstrap.min.css")
+    @Styles.Render("~/Content/font-awesome.min.css")
+    @Styles.Render("~/Scripts/jquery-ui/jquery-ui.min.css")
+    @Styles.Render("~/Scripts/jquery-ui/jquery-ui.structure.min.css")
+    @Styles.Render("~/Scripts/jquery-ui/jquery-ui.theme.min.css")
+
+    @Scripts.Render("~/Scripts/jquery-3.3.1.min.js")
+    @Scripts.Render("~/Scripts/jquery-ui/jquery-ui.min.js")
+    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Scripts.Render("~/Scripts/popper.js")
+    @Scripts.Render("~/Scripts/app/layout.js")
+    @Scripts.Render("~/Scripts/app/general.js")
+    @Scripts.Render("~/Scripts/app/validationSummary.js")
+    @Scripts.Render("~/Plugins/greensock/TweenMax.min.js")
+    @Scripts.Render("~/Plugins/greensock/TimelineMax.min.js")
+    @Scripts.Render("~/Plugins/greensock/ScrollMagic.min.js")
+    @Scripts.Render("~/Plugins/greensock/animation.gsap.min.js")
+    @Scripts.Render("~/Plugins/greensock/ScrollToPlugin.min.js")
+    @Scripts.Render("~/Plugins/progressbar/progressbar.js")
+    @Scripts.Render("~/Plugins/mCustomScrollbar/jquery.mCustomScrollbar.js")
+    @Scripts.Render("~/Plugins/easing/easing.js")
+    
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        /* Inicializa todos los datepicker */
+        $(".datepicker").datepicker({
+            gotoCurrent: true
+        });
+
+    });
+
+</script>
+
 </body>
 </html>

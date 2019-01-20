@@ -18,8 +18,8 @@ namespace MisGastosRepository
         public Usuario()
         {
             this.Egresos = new HashSet<Egreso>();
-            this.Logs = new HashSet<Log>();
             this.Ingresos = new HashSet<Ingreso>();
+            this.Logs = new HashSet<Log>();
         }
     
         public int IdUsuario { get; set; }
@@ -27,12 +27,14 @@ namespace MisGastosRepository
         public string Password { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> FechaCumpleaños { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Egreso> Egresos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Log> Logs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ingreso> Ingresos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Log> Logs { get; set; }
     }
 }

@@ -1,85 +1,38 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using MisGastos.Entities;
+using MisGastos.Helpers;
+using MisGastosRepository;
+using MisGastosRepository.Business;
 
 namespace MisGastos.Controllers
 {
-    public class IngresosController : Controller
+    public class IngresosController : CommonController
     {
-        // GET: Ingresos
-        public ActionResult Index()
+        public ActionResult Ingresos()
         {
-            return View();
-        }
+            IngresosBusiness ingresosBusiness = new IngresosBusiness();
+            MonedasBusiness monedasBusiness = new MonedasBusiness();
+            ConceptosIngresoBusiness conceptosIngresoBusiness = new ConceptosIngresoBusiness();
 
-        // GET: Ingresos/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+            List<Ingreso> ingresosUsuario = ingresosBusiness.ObtenerIngresosPorUsuario(UsuarioSession.GetIDUsuario).OrderByDescending(it => it.FechaIngreso).ToList();
 
-        // GET: Ingresos/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            ViewBag.ComboMonedas = new SelectList(monedasBusiness.Listar(), "IdMoneda", "Descripcion");
+            ViewBag.ComboConceptosIngreso = new SelectList(conceptosIngresoBusiness.Listar(), "IdConceptoIngreso", "Descripcion");
 
-        // POST: Ingresos/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            return View(new M_Ingresos
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+                Ingresos =  ingresosUsuario
+            });
         }
 
-        // GET: Ingresos/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult AltaIngreso(Ingreso nuevoIngreso)
         {
-            return View();
-        }
+            IngresosBusiness ingresosBusiness = new IngresosBusiness();
+            ingresosBusiness.Guardar(nuevoIngreso);
 
-        // POST: Ingresos/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Ingresos/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Ingresos/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Ingresos");
         }
     }
 }
